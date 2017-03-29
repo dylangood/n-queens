@@ -130,12 +130,23 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var diagonalSum = 0;
+      for ( var i = majorDiagonalColumnIndexAtFirstRow; i < this.attributes.n; i++ ) {
+        if ( this._isInBounds(i - majorDiagonalColumnIndexAtFirstRow, i) ) {
+          diagonalSum += this.rows()[i - majorDiagonalColumnIndexAtFirstRow][i];
+        }
+      }
+      return ( diagonalSum > 1 );
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      for ( var i = 2 - this.attributes.n; i < this.attributes.n - 1; i++ ) {
+        if ( this.hasMajorDiagonalConflictAt(i) ) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
