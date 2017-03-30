@@ -172,7 +172,7 @@
         }
       }
       return false;
-    }
+    },
 
     /*--------------------  End of Helper Functions  ---------------------*/
     /*--------------------  Start of Dylan's Custom Helper Functions  ---------------------*/
@@ -182,7 +182,18 @@
     //     console.log(this.rows()[i]);
     //   }
     // }
+    hasPieces: function() {
+      var flatBoard = this.reduce( function(acc, val) {
+        return acc.concat(val)
+      }, []);
+      return flatBoard.reduce( function(acc, val) {
+        return acc + val;
+      }, 0);
+    }
 
+    // isEmptyMatrix: function() {
+    //
+    // }
     /*--------------------  End of Dylan's Custom Helper Functions  ---------------------*/
 
 

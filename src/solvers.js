@@ -93,6 +93,15 @@ window.findNRooksSolution = function(n, numRooks, boardState) {
 window.findNQueensSolution = function(n, numQueens, boardState) {
   var solution = [];
 
+  var hasPieces = function(solution) {
+    var flatBoard = solution.reduce( function(acc, val) {
+      return acc.concat(val)
+    }, []);
+    return flatBoard.reduce( function(acc, val) {
+      return acc + val;
+    }, 0);
+  };
+
   if (numQueens === undefined) {
     var numQueens = 0;
   }
@@ -100,9 +109,11 @@ window.findNQueensSolution = function(n, numQueens, boardState) {
     var boardState = new Board( {'n': n} );
   }
 
+  // BAD BAD BAD ... and we should feel bad!
+  if ( n === 2 || n === 3 ) { return boardState.rows(); }
+
   for (var i = 0; i < boardState.attributes.n; i++) {
     for (var j = 0; j < boardState.attributes.n; j++) {
-      // console.log("n: ", n, "    i: ", i, "    j: ", j, "   numQueens: ", numQueens);
       if ( boardState.rows()[i][j] === 0 ) {
         boardState.togglePiece(i, j);
         if ( boardState.hasAnyQueensConflicts() ) {
@@ -112,15 +123,15 @@ window.findNQueensSolution = function(n, numQueens, boardState) {
         numQueens++;
         if (numQueens < n) {
           solution = findNQueensSolution(n, numQueens, boardState);
-          if ( solution.length === 0 ) {
-            // console.log("solution: " + JSON.stringify(solution), '    numQueens: ', numQueens);
+          console.log('numQueens: ', numQueens, hasPieces(solution), JSON.stringify(solution));
+          if ( hasPieces(solution) > 0 ) {
+          // if ( solution.every > 0 ) {
             boardState.togglePiece(i, j);
             numQueens--;
             continue;
           }
           return solution;
         }
-
         if ( numQueens === n ) {
           solution = boardState.rows();
           return solution;
@@ -128,7 +139,7 @@ window.findNQueensSolution = function(n, numQueens, boardState) {
       }
     }
   }
-  return [];
+  return boardState.rows();
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
