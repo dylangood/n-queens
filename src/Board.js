@@ -166,7 +166,7 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (var i = 1; i < this.attributes.n + 2; i++) {
+      for (var i = 1; i < this.attributes.n * 2 - 2; i++) {
         if ( this.hasMinorDiagonalConflictAt(i) ) {
           return true;
         }
@@ -175,6 +175,15 @@
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
+    /*--------------------  Start of Dylan's Custom Helper Functions  ---------------------*/
+
+    // logBoardState: function() {
+    //   for ( var i = 0; i < this.attributes.n; i++ ) {
+    //     console.log(this.rows()[i]);
+    //   }
+    // }
+
+    /*--------------------  End of Dylan's Custom Helper Functions  ---------------------*/
 
 
   });
