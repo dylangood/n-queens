@@ -90,8 +90,9 @@ window.findNRooksSolution = function(n, numRooks, boardState) {
 // };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
-window.findNQueensSolution = function(n, numQueens, boardState) {
+window.findNQueensSolution = function(n, boardState) {
   var solution = [];
+  var numQueens = 0;
 
   var hasPieces = function(solution) {
     var flatBoard = solution.reduce( function(acc, val) {
@@ -102,38 +103,33 @@ window.findNQueensSolution = function(n, numQueens, boardState) {
     }, 0);
   };
 
-  if (numQueens === undefined) {
-    var numQueens = 0;
-  }
   if (boardState === undefined) {
     var boardState = new Board( {'n': n} );
   }
-
-  // BAD BAD BAD ... and we should feel bad!
-  if ( n === 2 || n === 3 ) { return boardState.rows(); }
 
   for (var i = 0; i < boardState.attributes.n; i++) {
     for (var j = 0; j < boardState.attributes.n; j++) {
       if ( boardState.rows()[i][j] === 0 ) {
         boardState.togglePiece(i, j);
+        numQueens = hasPieces(boardState.rows());
+
         if ( boardState.hasAnyQueensConflicts() ) {
           boardState.togglePiece(i, j);
+          numQueens = hasPieces(boardState.rows());
           continue;
-        }
-        numQueens++;
-        if (numQueens < n) {
-          solution = findNQueensSolution(n, numQueens, boardState);
-          console.log('numQueens: ', numQueens, hasPieces(solution), JSON.stringify(solution));
-          if ( hasPieces(solution) > 0 ) {
-          // if ( solution.every > 0 ) {
-            boardState.togglePiece(i, j);
-            numQueens--;
-            continue;
-          }
-          return solution;
         }
         if ( numQueens === n ) {
           solution = boardState.rows();
+          return solution;
+        }
+        if (numQueens < n) {
+          solution = findNQueensSolution(n, boardState);
+          numQueens = hasPieces(solution);
+          if ( numQueens !== n ) {
+            boardState.togglePiece(i, j);
+            numQueens = hasPieces(boardState.rows());
+            continue;
+          }
           return solution;
         }
       }
