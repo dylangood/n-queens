@@ -176,7 +176,28 @@
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
+    // checkConflictZones: function(rowIndex, colIndex) {
+    //   var noConflictZones = [];
+    //
+    //   var rowOptions = [];
+    //   var colOptions = [];
+    //
+    //   for (var i = 0; i < this.attributes.n; i++) {
+    //     for (var j = 0; j < this.attributes.n; j++) {
+    //       if (j != colIndex) {
+    //         colOptions.push;
+    //       }
+    //     }
+    //     if (i != rowIndex) {
+    //       rowOptions.push;
+    //     }
+    //   }
+    //   return noConflictZones.push(rowOptions, colOptions);
+    // }
+
   });
+
+/*--------------------  End of Custom Functions  ---------------------*/
 
   var makeEmptyMatrix = function(n) {
     return _(_.range(n)).map(function() {
